@@ -1,32 +1,39 @@
-<html>
+<!DOCTYPE html>
+<html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <title>日本語テスト</title>
-    <script src="https://dev-d.sc-shutto-translation.com/trans.js?id=584"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-        }
-        p {
-            margin: 8px 0;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Unique Japanese Paragraphs</title>
+  <script src="https://dev-d.sc-shutto-translation.com/trans.js?id=584"></script>
+
 </head>
 <body>
+  <h1>10,000 chuỗi không trùng</h1>
+  <div id="root"></div>
 
-    <h1>日本語のテスト</h1>
+  <script>
+    const chars = ["あ","い","う","え","お","か","き","く","け","こ",
+                   "さ","し","す","せ","そ","た","ち","つ","て","と"];
 
-    <p>1. こんにちは。</p>
-    <p>2. おはようございます。</p>
-    <p>3. こんばんは。</p>
-    <p>4. ありがとう。</p>
-    <p>5. すみません。</p>
-    <p>6. はい。</p>
-    <p>7. いいえ。</p>
-    <p>8. 元気ですか？</p>
-    <p>9. 私は学生です。</p>
-    <p>10. さようなら。</p>
+    const root = document.getElementById("root");
+    const fragment = document.createDocumentFragment();
 
+    const used = new Set();
+
+    while (used.size < 500) {
+      let text = "";
+      for (let i = 0; i < 4; i++) {
+        text += chars[Math.floor(Math.random() * chars.length)];
+      }
+
+      if (!used.has(text)) {
+        used.add(text);
+        const p = document.createElement("p");
+        p.textContent = text;
+        fragment.appendChild(p);
+      }
+    }
+
+    root.appendChild(fragment);
+  </script>
 </body>
 </html>
