@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>自動クロールページ</title>
+</head>
+<body>
+    <h1 id="page-title">ページ</h1>
+
+    <p>URLクエリから取得したページ番号を表示します。</p>
+    <p id="page-content"></p>
+    <p>自動クロール用のテストコンテンツを表示しています。</p>
+    <p>クエリの値を変えて別のページを読み込めます。</p>
+
+    <script>
+        const params = new URLSearchParams(window.location.search)
+        const page = params.get('page') || 'デフォルト'
+        const pageText = `ページ ${page}`
+
+        document.title = pageText
+        document.querySelector('#page-title').textContent = pageText
+        document.querySelector('#page-content').textContent = `${pageText}のコンテンツです。`
+    </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>収集対象外コンテンツのテスト</title>
+    <script src="https://localhost:4566/shutto-translation-development3/trans.js?id=1"></script>
+</head>
+<body>
+    <h1>収集対象外コンテンツ</h1>
+    <script>const ignoredScriptText = '収集しないスクリプト';</script>
+    <style>収集しないスタイルテキスト</style>
+    <noscript>収集しないnoscriptテキスト</noscript>
+    <object>収集しないobjectテキスト</object>
+    <iframe title="収集しないiframe"></iframe>
+    <svg><text>収集しないSVGテキスト</text></svg>
+    <div stt-ignore>このマーカー内は収集しない</div>
+    <div data-stt-ignore>このデータマーカー内は収集しない</div>
+    <p>この表示テキストは収集します。</p>
+</body>
+</html>
