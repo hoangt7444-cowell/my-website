@@ -113,7 +113,7 @@
     <main>
         <h1>Ping and Beacon Request Test</h1>
         <p class="hint">
-            Open DevTools, select the Network tab, then send either request. The default endpoint is this page.
+            Both requests are sent automatically when this page loads. The default endpoint is this page.
         </p>
 
         <label for="endpoint">Request endpoint</label>
@@ -121,11 +121,6 @@
 
         <label for="payload">Beacon payload</label>
         <textarea id="payload">{"event":"request-test","source":"ping-beacon-page"}</textarea>
-
-        <div class="actions">
-            <button id="ping-button" type="button">Send ping request</button>
-            <button id="beacon-button" type="button">Send beacon request</button>
-        </div>
 
         <div id="log" role="status" aria-live="polite">Ready.</div>
     </main>
@@ -146,7 +141,7 @@
             log.textContent = `[${timestamp}] ${message}\n${log.textContent}`.trim();
         }
 
-        document.querySelector("#ping-button").addEventListener("click", () => {
+        function sendPingRequest() {
             const link = document.createElement("a");
             link.href = "about:blank";
             link.ping = getEndpoint();
@@ -158,9 +153,9 @@
             link.click();
             link.remove();
             writeLog(`Ping dispatched to ${getEndpoint()} (inspect the Network tab).`);
-        });
+        }
 
-        document.querySelector("#beacon-button").addEventListener("click", () => {
+        function sendBeaconRequest() {
             if (!navigator.sendBeacon) {
                 writeLog("Beacon is not supported by this browser.");
                 return;
@@ -171,7 +166,10 @@
                 new Blob([payloadInput.value], { type: "application/json" })
             );
             writeLog(`Beacon ${sent ? "queued" : "was not queued"} for ${getEndpoint()}.`);
-        });
+        }
+
+        sendPingRequest();
+        sendBeaconRequest();
     </script>
 </body>
 </html>
