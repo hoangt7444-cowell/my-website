@@ -111,9 +111,9 @@
 </head>
 <body>
     <main>
-        <h1>Ping and Beacon Request Test</h1>
+        <h1>GET and Beacon Request Test</h1>
         <p class="hint">
-            Both requests are sent automatically when this page loads. The default endpoint is this page.
+            A GET request and a beacon request are sent automatically when this page loads.
         </p>
 
         <label for="endpoint">Request endpoint</label>
@@ -124,8 +124,6 @@
 
         <div id="log" role="status" aria-live="polite">Ready.</div>
     </main>
-
-    <iframe name="ping-target" title="Ping request target" hidden></iframe>
 
     <script>
         const endpointInput = document.querySelector("#endpoint");
@@ -141,18 +139,15 @@
             log.textContent = `[${timestamp}] ${message}\n${log.textContent}`.trim();
         }
 
-        function sendPingRequest() {
-            const link = document.createElement("a");
-            link.href = "about:blank";
-            link.ping = getEndpoint();
-            link.target = "ping-target";
-            link.rel = "noreferrer";
-            link.textContent = "ping request";
-            link.style.display = "none";
-            document.body.append(link);
-            link.click();
-            link.remove();
-            writeLog(`Ping dispatched to ${getEndpoint()} (inspect the Network tab).`);
+        function sendGetRequest() {
+            fetch(getEndpoint(), {
+                method: "GET",
+                mode: "no-cors",
+                cache: "no-store",
+                keepalive: true
+            })
+                .then(() => writeLog(`GET request dispatched to ${getEndpoint()}.`))
+                .catch((error) => writeLog(`GET request failed: ${error.message}`));
         }
 
         function sendBeaconRequest() {
@@ -168,7 +163,7 @@
             writeLog(`Beacon ${sent ? "queued" : "was not queued"} for ${getEndpoint()}.`);
         }
 
-        sendPingRequest();
+        sendGetRequest();
         sendBeaconRequest();
     </script>
 </body>
