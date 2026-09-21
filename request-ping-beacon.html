@@ -111,9 +111,9 @@
 </head>
 <body>
     <main>
-        <h1>POST and Beacon Request Test</h1>
+        <h1>Beacon Request Test</h1>
         <p class="hint">
-            A POST request and a beacon request are sent automatically when this page loads.
+            A beacon request is sent automatically when this page loads.
         </p>
 
         <label for="endpoint">Request endpoint</label>
@@ -139,21 +139,6 @@
             log.textContent = `[${timestamp}] ${message}\n${log.textContent}`.trim();
         }
 
-        function sendPostRequest() {
-            fetch(getEndpoint(), {
-                method: "POST",
-                body: payloadInput.value,
-                headers: {
-                    "Content-Type": "text/plain;charset=UTF-8"
-                },
-                mode: "no-cors",
-                cache: "no-store",
-                keepalive: true
-            })
-                .then(() => writeLog(`POST request dispatched to ${getEndpoint()}.`))
-                .catch((error) => writeLog(`POST request failed: ${error.message}`));
-        }
-
         function sendBeaconRequest() {
             if (!navigator.sendBeacon) {
                 writeLog("Beacon is not supported by this browser.");
@@ -167,7 +152,6 @@
             writeLog(`Beacon ${sent ? "queued" : "was not queued"} for ${getEndpoint()}.`);
         }
 
-        sendPostRequest();
         sendBeaconRequest();
     </script>
 </body>
