@@ -111,13 +111,13 @@
 </head>
 <body>
     <main>
-        <h1>GET and Beacon Request Test</h1>
+        <h1>POST and Beacon Request Test</h1>
         <p class="hint">
-            A GET request and a beacon request are sent automatically when this page loads.
+            A POST request and a beacon request are sent automatically when this page loads.
         </p>
 
         <label for="endpoint">Request endpoint</label>
-        <input id="endpoint" type="url" value="https://hoangt7444-cowell.github.io/my-website/" placeholder="https://example.test/collect">
+        <input id="endpoint" type="url" value="http://172.16.41.79:8080/post" placeholder="https://example.test/collect">
 
         <label for="payload">Beacon payload</label>
         <textarea id="payload">{"event":"request-test","source":"ping-beacon-page"}</textarea>
@@ -139,15 +139,19 @@
             log.textContent = `[${timestamp}] ${message}\n${log.textContent}`.trim();
         }
 
-        function sendGetRequest() {
+        function sendPostRequest() {
             fetch(getEndpoint(), {
-                method: "GET",
+                method: "POST",
+                body: payloadInput.value,
+                headers: {
+                    "Content-Type": "text/plain;charset=UTF-8"
+                },
                 mode: "no-cors",
                 cache: "no-store",
                 keepalive: true
             })
-                .then(() => writeLog(`GET request dispatched to ${getEndpoint()}.`))
-                .catch((error) => writeLog(`GET request failed: ${error.message}`));
+                .then(() => writeLog(`POST request dispatched to ${getEndpoint()}.`))
+                .catch((error) => writeLog(`POST request failed: ${error.message}`));
         }
 
         function sendBeaconRequest() {
@@ -158,12 +162,12 @@
 
             const sent = navigator.sendBeacon(
                 getEndpoint(),
-                new Blob([payloadInput.value], { type: "application/json" })
+                new Blob([payloadInput.value], { type: "text/plain;charset=UTF-8" })
             );
             writeLog(`Beacon ${sent ? "queued" : "was not queued"} for ${getEndpoint()}.`);
         }
 
-        sendGetRequest();
+        sendPostRequest();
         sendBeaconRequest();
     </script>
 </body>
